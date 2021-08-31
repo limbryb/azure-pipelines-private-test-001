@@ -18,5 +18,6 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- script: dotnet --version
-  displayName: 'Dotnet Version'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: '--version'
