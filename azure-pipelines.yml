@@ -19,6 +19,6 @@ steps:
     pwd
   displayName: 'Run a multi-line script'
 
-- task: DotNetCoreCLI@2
+- task: DockerInstaller@0
   inputs:
-    command: 'build'
+    dockerVersion: '19.03.12-ce'
