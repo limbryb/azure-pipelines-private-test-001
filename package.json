@@ -1,0 +1,33 @@
+{
+  "name": "azure-pipelines-private-test-001",
+  "version": "1.0.0",
+  "description": "This is a project for testing azure pipelines",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server:build": "tsc -p tsconfig.json -w",
+    "server:run": "nodemon build/index.js",
+    "start": "concurrently npm:server:*",
+    "start:prod": "node build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/limbryb/azure-pipelines-private-test-001.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/limbryb/azure-pipelines-private-test-001/issues"
+  },
+  "homepage": "https://github.com/limbryb/azure-pipelines-private-test-001#readme",
+  "dependencies": {
+    "concurrently": "^6.2.1",
+    "fastify": "^3.20.2",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.10",
+    "typescript": "^4.4.2"
+  }
+}
