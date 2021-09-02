@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:ci": "jest --ci",
+    "test:ci": "jest --ci --coverage",
     "build": "tsc -p tsconfig.json",
     "server:build": "tsc -p tsconfig.json -w",
     "server:run": "nodemon build/index.js",

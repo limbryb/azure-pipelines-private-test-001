@@ -11,6 +11,11 @@ const config: Config.InitialOptions = {
       ancestorSeparator: ' > ',
     }],
   ],
+  coverageDirectory: 'reports/coverage',
+  coverageReporters: [
+    'cobertura',
+    'html',
+  ],
 };
 
 module.exports = config;
