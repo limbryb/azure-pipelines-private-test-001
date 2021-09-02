@@ -33,7 +33,7 @@ steps:
   inputs: 
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/reports/coverage/*coverage.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/reports/coverage'
+    # reportDirectory: '$(System.DefaultWorkingDirectory)/reports/coverage'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
