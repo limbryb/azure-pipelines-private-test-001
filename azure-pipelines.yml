@@ -6,6 +6,11 @@
 trigger:
 - main
 
+pr:
+- main
+- releases/*
+- feature/*
+
 pool:
   name: pool-test-001
 
