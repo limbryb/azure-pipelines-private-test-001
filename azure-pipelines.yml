@@ -6,18 +6,40 @@
 trigger:
 - main
 
+pr:
+- main
+- releases/*
+- feature/*
+
 pool:
   name: pool-test-001
 
-container: node:latest
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-    pwd
-    node --version
-  displayName: 'Run a multi-line script'
+stages: 
+- stage: Build
+  jobs:
+  - job:
+    container: node:latest
+    steps:
+    - script: npm ci
+      displayName: 'Installing dependencies'
+- stage: Testing
+  jobs:
+  - job: generate_reports
+    container: node:latest
+    steps:
+    - script: npm run test:ci
+      displayName: 'Running tests'
+  - job: saving_reports
+    dependsOn: generate_reports
+    container: mcr.microsoft.com/dotnet/sdk:5.0-buster-slim
+    steps:
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testRunner: JUnit
+        testResultsFiles: '**/junit.xml'
+    - task: PublishCodeCoverageResults@1
+      inputs: 
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/reports/coverage/*coverage.xml'
+        # reportDirectory: '$(System.DefaultWorkingDirectory)/reports/coverage'
