@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:ci": "jest --ci",
     "build": "tsc -p tsconfig.json",
     "server:build": "tsc -p tsconfig.json -w",
     "server:run": "nodemon build/index.js",
     "start": "concurrently npm:server:*",
+    "start:dev": "ts-node src/index.ts",
     "start:prod": "node build/index.js"
   },
   "repository": {
@@ -31,7 +33,9 @@
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.10",
     "jest": "^27.1.0",
+    "jest-junit": "^12.2.0",
     "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
     "typescript": "^4.4.2"
   }
 }

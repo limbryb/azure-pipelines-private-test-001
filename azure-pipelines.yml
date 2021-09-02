@@ -17,8 +17,17 @@ pool:
 container: node:latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: npm ci
+  displayName: 'Installing dependencies'
+
+- script: npm run test:ci
+  displayName: 'Running tests'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: '**/junit.xml'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
