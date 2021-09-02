@@ -24,13 +24,14 @@ stages:
       displayName: 'Installing dependencies'
 - stage: Testing
   jobs:
-  - job:
+  - job: generate_reports
     container: node:latest
     steps:
     - script: npm run test:ci
       displayName: 'Running tests'
-  - job:
-    container: mcr.microsoft.com/azure-functions/dotnet:3.0-slim
+  - job: saving_reports
+    dependsOn: generate_reports
+    container: mcr.microsoft.com/dotnet/sdk:5.0-buster-slim
     steps:
     - task: PublishTestResults@2
       condition: succeededOrFailed()
