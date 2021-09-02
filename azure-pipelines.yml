@@ -14,30 +14,31 @@ pr:
 pool:
   name: pool-test-001
 
-# container: node:latest
-
-steps:
-- script: npm ci
-  displayName: 'Installing dependencies'
-
-- script: npm run test:ci
-  displayName: 'Running tests'
-
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: JUnit
-    testResultsFiles: '**/junit.xml'
-
-- task: PublishCodeCoverageResults@1
-  inputs: 
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/reports/coverage/*coverage.xml'
-    # reportDirectory: '$(System.DefaultWorkingDirectory)/reports/coverage'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-    pwd
-    node --version
-  displayName: 'Run a multi-line script'
+stages: 
+- stage: Build
+  jobs:
+  - job:
+    container: node:latest
+    steps:
+    - script: npm ci
+      displayName: 'Installing dependencies'
+- stage: Testing
+  jobs:
+  - job:
+    container: node:latest
+    steps:
+    - script: npm run test:ci
+      displayName: 'Running tests'
+  - job:
+    container: mcr.microsoft.com/azure-functions/dotnet:3.0-slim
+    steps:
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testRunner: JUnit
+        testResultsFiles: '**/junit.xml'
+    - task: PublishCodeCoverageResults@1
+      inputs: 
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/reports/coverage/*coverage.xml'
+        # reportDirectory: '$(System.DefaultWorkingDirectory)/reports/coverage'
