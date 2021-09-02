@@ -14,7 +14,7 @@ pr:
 pool:
   name: pool-test-001
 
-container: node:latest
+# container: node:latest
 
 steps:
 - script: npm ci
